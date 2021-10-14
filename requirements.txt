@@ -45,7 +45,7 @@ pycparser==2.20
 Pygments @ file:///tmp/build/80754af9/pygments_1629234116488/work
 pyparsing==2.4.7
 pyrsistent==0.18.0
-pytest==6.2.5
+pytest==5.1.1
 python-dateutil @ file:///tmp/build/80754af9/python-dateutil_1626374649649/work
 pywin32==228
 pywinpty==1.1.4
