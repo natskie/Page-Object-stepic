@@ -1,5 +1,6 @@
 from pages.product_page import ProductPage
 from pages.basket_page import BasketPage
+from pages.login_page import LoginPage
 import time
 import pytest
 
@@ -45,7 +46,7 @@ def test_message_disappeared_after_adding_product_to_basket(browser):
      page.add_to_basket()
      page.should_dissapeared_success_message()
 
-@pytest.mark.new
+
 def test_guest_cant_see_product_in_basket_opened_from_product_page(browser):
     page = ProductPage(browser, link)
     page.open()
@@ -53,3 +54,32 @@ def test_guest_cant_see_product_in_basket_opened_from_product_page(browser):
     basket_page = BasketPage(browser, browser.current_url)
     basket_page.should_be_empty()
 
+@pytest.mark.users
+class TestUserAddToBasketFromProductPage():
+  @pytest.fixture(scope="function", autouse=True)
+  def setup(self, browser):
+    page = ProductPage(browser, link)
+    page.open()
+    page.go_to_login_page()
+    login_page = LoginPage(browser, browser.current_url)
+    email = str(time.time()) + "@fakemail.org"
+    password="zoomzoomzoom"
+    login_page.register_new_user(email,password)
+    login_page.should_be_authorized_user
+    yield
+   
+  def test_user_cant_see_success_message(self, browser):
+    page = ProductPage(browser, link)
+    page.open()
+    page.go_to_basket_page()
+    basket_page = BasketPage(browser, browser.current_url)
+    basket_page.should_be_empty()
+
+  def test_user_can_add_product_to_basket(self,browser):
+    page = ProductPage(browser, link)
+    page.open()
+    time.sleep(10)
+    page.add_to_basket()
+  #  page.solve_quiz_and_get_code()
+    page.should_item_in_basket()
+    #time.sleep(10)
