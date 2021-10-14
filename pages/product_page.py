@@ -4,10 +4,10 @@ import pytest
 
 class ProductPage(BasePage):
     def should_be_basket_button(self):
-       assert self.is_element_present(*ProductPageLocators.BASKET_BUTTON), "Basket_button is not presented"  
+       assert self.is_element_present(*ProductPageLocators.BASKET_BUTTON_ADD), "Basket add button is not presented"  
    
     def add_to_basket(self):
-        link = self.browser.find_element(*ProductPageLocators.BASKET_BUTTON)
+        link = self.browser.find_element(*ProductPageLocators.BASKET_BUTTON_ADD)
         link.click()
     
     def should_item_in_basket(self):
